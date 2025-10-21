@@ -1,3 +1,6 @@
 api:
   url: http://localhost
   port: 8080
+  trustSsl: true
+  infoLogLimit: 100
+  debugLogLimit: 1000

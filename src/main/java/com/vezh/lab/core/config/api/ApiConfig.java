@@ -11,4 +11,5 @@ public class ApiConfig {
 
     private String url;
     private Integer port;
+    private Boolean trustSsl;
 }
