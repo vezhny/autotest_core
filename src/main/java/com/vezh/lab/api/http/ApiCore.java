@@ -3,15 +3,12 @@ package com.vezh.lab.api.http;
 import com.vezh.lab.api.json.JsonSerializer;
 import com.vezh.lab.core.config.api.ApiConfig;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
-import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +32,6 @@ public abstract class ApiCore {
     @Setter
     private Boolean rawBody = false;
 
-    @Setter
-    @Getter
-    private Boolean restoreTokenAfterRequest = false;
-
-    @Setter
-    private Boolean attachResponseBody = true;
-    
     /**
      * Base RestAssured instance initialization
      * @return RestAssured instance
@@ -106,8 +96,6 @@ public abstract class ApiCore {
      * @return - server response
      */
     protected Response sendRequest(RequestSpecification requestSpecification, String endpoint, Object body, Method restMethod) {
-//        logRequest(requestSpecification, restMethod, endpoint);
-
         requestSpecification = getRequestBody(body, requestSpecification);
         requestSpecification.log().method();
         requestSpecification.log().uri();
@@ -138,42 +126,10 @@ public abstract class ApiCore {
             }
         }
 
-//        String responseBody = JsonSerializer.formatJson(response.body().asString());
-//        long responseLineCount = responseBody.lines().count();
-//        log.info("Response code: " + response.getStatusCode());
-//        if (responseLineCount > apiProperties.getInfoLogLimit()) {
-//            if (responseLineCount > apiProperties.getDebugLogLimit()) {
-//                log.info("Response body is extremely long (over " + apiProperties.getDebugLogLimit() + " lines). " +
-//                        "Will be skipped from logs to save disk space");
-//            } else {
-//                log.info("Response body is too long (over " + apiProperties.getInfoLogLimit() + " lines). " +
-//                        "Will be printed in debug log only");
-//                log.debug("Response body:\n" + responseBody);
-//            }
-//        } else {
-//            log.info("Response body:\n" + responseBody);
-//        }
         response.then()
                 .log().status()
                 .log().body();
         return response;
-    }
-
-    /**
-     * Logs http-request
-     * Query parameters included
-     * @param requestSpecification - RestAssured construction
-     * @param restMethod - Selected REST-method
-     * @param url - absolute url
-     */
-    private void logRequest(RequestSpecification requestSpecification, Method restMethod, String url) {
-        RequestSpecificationImpl specImpl = (RequestSpecificationImpl) requestSpecification;
-        String absoluteUrl = specImpl.getURI(specImpl.partiallyApplyPathParams(url, false, null));
-        Allure.addAttachment("URL", absoluteUrl);
-        log.info(restMethod.toString() + ":\t" + absoluteUrl);
-        if (!specImpl.getRequestParams().isEmpty()) {
-            log.info("PARAMS: " + specImpl.getRequestParams());
-        }
     }
 
     /**
@@ -188,14 +144,11 @@ public abstract class ApiCore {
         if (body != null) {
             if (rawBody) {
                 requestSpecification.body(body);
-//                log.info("Request body:\n" + body);
                 Allure.addAttachment("Request body", "text/plain", body.toString());
-//                setRawBody(false);
             } else {
                 String json = JsonSerializer.getJson(body);
                 requestSpecification.body(json);
                 json = JsonSerializer.formatJson(json);
-//                log.info("Request body:\n" + json);
                 Allure.addAttachment("Request body", "application/json", json);
             }
         }
