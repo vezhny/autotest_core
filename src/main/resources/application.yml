@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: INFO
+
+spring:
+  profiles:
+    active: @spring.profiles.active@

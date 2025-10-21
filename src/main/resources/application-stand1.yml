@@ -1,0 +1,3 @@
+api:
+  url: https://fake-json-api.mock.beeceptor.com
+  trustSsl: true

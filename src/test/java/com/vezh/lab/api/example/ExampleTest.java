@@ -1,0 +1,36 @@
+package com.vezh.lab.api.example;
+
+import com.vezh.lab.api.ApiTestCore;
+import com.vezh.lab.api.http.example.ExampleApi;
+import com.vezh.lab.core.matcher.ExampleMatcher;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Epic("Example")
+@Feature("Example")
+public class ExampleTest extends ApiTestCore {
+
+    @Autowired
+    private ExampleApi api;
+
+    @Autowired
+    private ExampleMatcher matcher;
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Link(value = "https://beeceptor.com/docs/sample-api-for-testing/")
+    @DisplayName("Example test")
+    @Test
+    public void exampleTest() {
+        Response response = api.sendExample();
+
+        matcher.assertSuccessResponse(response);
+        matcher.assertExampleModels(response);
+    }
+}
