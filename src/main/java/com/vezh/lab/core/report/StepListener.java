@@ -1,4 +1,4 @@
-package com.vezh.lab.common.report;
+package com.vezh.lab.core.report;
 
 import io.qameta.allure.listener.StepLifecycleListener;
 import io.qameta.allure.model.StepResult;
