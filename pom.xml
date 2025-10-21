@@ -16,8 +16,7 @@
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <java.version>11</java.version>
         <maven.surefire.plugin.version>3.5.4</maven.surefire.plugin.version>
-        <junit.version>6.0.0</junit.version>
-        <junit.platform.version>6.0.0</junit.platform.version>
+        <junit.version>5.11.3</junit.version>
         <lombok.version>1.18.42</lombok.version>
         <log4j.version>2.25.2</log4j.version>
         <slf4j.version>2.0.17</slf4j.version>
@@ -38,21 +37,15 @@
     <profiles>
         <profile>
             <id>stand1</id>
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>stand1</value>
-                </property>
-            </activation>
+            <properties>
+                <spring.profiles.active>stand1</spring.profiles.active>
+            </properties>
         </profile>
         <profile>
             <id>stand2</id>
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>stand2</value>
-                </property>
-            </activation>
+            <properties>
+                <spring.profiles.active>stand2</spring.profiles.active>
+            </properties>
         </profile>
     </profiles>
 
@@ -90,24 +83,6 @@
             <version>${junit.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-engine</artifactId>
-            <version>${junit.platform.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>${junit.platform.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-engine</artifactId>
-            <version>${junit.platform.version}</version>
-        </dependency>
-
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -120,12 +95,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
@@ -257,6 +226,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
+                    <useModulePath>false</useModulePath>
                     <properties>
                         <property>
                             <name>listener</name>

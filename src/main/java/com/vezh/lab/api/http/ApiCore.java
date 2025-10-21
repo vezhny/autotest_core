@@ -82,7 +82,7 @@ public abstract class ApiCore {
      * @return - server response
      */
     protected Response sendRequest(String endpoint, Method restMethod) {
-        RequestSpecification requestSpecification = defaultSpec().contentType(ContentType.JSON);
+        RequestSpecification requestSpecification = defaultSpec();
         return sendRequest(requestSpecification, endpoint, null, restMethod);
     }
 
@@ -105,7 +105,6 @@ public abstract class ApiCore {
      * @param restMethod - using REST-method
      * @return - server response
      */
-    @Step("Send {3} request")
     protected Response sendRequest(RequestSpecification requestSpecification, String endpoint, Object body, Method restMethod) {
 //        logRequest(requestSpecification, restMethod, endpoint);
 
@@ -154,6 +153,9 @@ public abstract class ApiCore {
 //        } else {
 //            log.info("Response body:\n" + responseBody);
 //        }
+        response.then()
+                .log().status()
+                .log().body();
         return response;
     }
 
