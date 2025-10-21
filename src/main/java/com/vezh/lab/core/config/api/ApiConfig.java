@@ -10,6 +10,5 @@ import org.springframework.stereotype.Component;
 public class ApiConfig {
 
     private String url;
-    private Integer port;
     private Boolean trustSsl;
 }

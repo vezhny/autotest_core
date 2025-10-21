@@ -48,8 +48,7 @@ public abstract class ApiCore {
      */
     protected RequestSpecification defaultSpec() {
         RequestSpecification requestSpecification = given()
-                .baseUri(apiConfig.getUrl())
-                .port(apiConfig.getPort());
+                .baseUri(apiConfig.getUrl());
 //                .filter(new AllureRestAssured())
 //                .contentType("application/json;charset=UTF-8"); uncomment to specify content-type
         if (authenticate) {

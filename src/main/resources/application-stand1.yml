@@ -1,6 +1,5 @@
 api:
-  url: http://localhost
-  port: 8080
+  url: https://fake-json-api.mock.beeceptor.com
   trustSsl: true
   infoLogLimit: 100
   debugLogLimit: 1000
