@@ -1,4 +1,4 @@
-package com.vezh.lab.ui.pages.example;
+package com.vezh.lab.ui.form.example;
 
 public enum Continent {
 

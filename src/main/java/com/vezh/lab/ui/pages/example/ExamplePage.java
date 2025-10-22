@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.vezh.lab.core.exception.UiEngineExecutionException;
+import com.vezh.lab.ui.form.example.*;
 import com.vezh.lab.ui.pages.PageCore;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -48,6 +49,24 @@ public class ExamplePage extends PageCore {
     @Override
     public Boolean isCurrent() {
         return firstNameInput.isDisplayed() && submitButton.isDisplayed();
+    }
+
+    /**
+     * Fills the page according to given form
+     * ! All the form should be filled completely. There are no NPE countermeasures !
+     * @param form - given form
+     * @return
+     */
+    @Step("Fill the page")
+    public ExamplePage fillThePage(ExampleForm form) {
+        enterFirstName(form.getFirstName());
+        enterSurName(form.getSurname());
+        selectGender(form.getGender());
+        selectColor(form.getColor());
+        selectContacts(form.getContacts().toArray(new Contact[]{}));
+        enterMoreText(form.getMoreInfo());
+        selectContinent(form.getContinent());
+        return this;
     }
 
     /**
@@ -98,7 +117,7 @@ public class ExamplePage extends PageCore {
      * @return
      */
     @Step("Select gender {0}")
-    public ExamplePage select(Gender gender) {
+    public ExamplePage selectGender(Gender gender) {
         SelenideElement option = getGenderOption(gender);
         option.click();
         return this;
@@ -114,6 +133,18 @@ public class ExamplePage extends PageCore {
         SelenideElement radioButton = getColorElement(color);
         radioButton.click();
         return this;
+    }
+
+    /**
+     * Selects all given contacts
+     * @param contacts - contacts to select
+     * @return
+     */
+    @Step("Select contacts")
+    public ExamplePage selectContacts(Contact... contacts) {
+        for (Contact contact : contacts) {
+            selectContact(contact);
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.vezh.lab.ui.pages.example;
+package com.vezh.lab.ui.form.example;
 
 import com.vezh.lab.core.exception.UiEngineExecutionException;
 import lombok.AllArgsConstructor;
