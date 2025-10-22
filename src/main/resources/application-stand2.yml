@@ -1,0 +1,10 @@
+api:
+  url: https://fake-json-api.mock.beeceptor.com
+  trustSsl: true
+
+selenide:
+  url: https://automationintesting.com/selenium/testpage/?
+  timeout: 5000
+  screenshots: true
+  browser: chrome
+  headless: false
