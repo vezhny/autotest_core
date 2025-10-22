@@ -3,7 +3,7 @@ api:
   trustSsl: true
 
 selenide:
-  url: http://localhost
+  url: https://automationintesting.com/selenium/testpage/?
   timeout: 5000
   screenshots: true
   browser: chrome
