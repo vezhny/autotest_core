@@ -7,7 +7,7 @@
     <groupId>com.vezh.lab</groupId>
     <artifactId>autotest_core</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
