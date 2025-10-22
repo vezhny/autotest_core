@@ -1,13 +1,12 @@
 package com.vezh.lab.api.model.example;
 
+import com.vezh.lab.api.model.ModelCore;
 import lombok.Data;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@ToString
-public class ExampleModel {
+public class ExampleModel extends ModelCore {
 
     private Long id;
     private String name;
