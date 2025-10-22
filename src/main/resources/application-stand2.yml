@@ -1,3 +1,10 @@
 api:
   url: https://fake-json-api.mock.beeceptor.com
   trustSsl: true
+
+selenide:
+  url: http://localhost
+  timeout: 5000
+  screenshots: true
+  browser: chrome
+  headless: false
