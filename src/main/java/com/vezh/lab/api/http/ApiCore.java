@@ -129,6 +129,7 @@ public abstract class ApiCore {
         response.then()
                 .log().status()
                 .log().body();
+        Allure.addAttachment("Response body", response.getContentType(), response.asPrettyString());
         return response;
     }
 
