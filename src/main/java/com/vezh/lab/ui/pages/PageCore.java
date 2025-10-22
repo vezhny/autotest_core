@@ -2,7 +2,9 @@ package com.vezh.lab.ui.pages;
 
 import com.codeborne.selenide.*;
 import com.vezh.lab.core.config.ui.SelenideConfig;
+import com.vezh.lab.core.exception.UiEngineExecutionException;
 import io.qameta.allure.Step;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
@@ -185,5 +187,42 @@ public abstract class PageCore {
             }
         }
         return null;
+    }
+
+    /**
+     * Searches a first Selenide element, where it's attribute matches to value
+     * Returns null, if there is no such element
+     * ! Be aware of NPE !
+     * @param elements - elements collection to search at
+     * @param attributeName - attribute name to check
+     * @param targetValue - target value
+     * @return
+     */
+    protected SelenideElement searchElementWithAttribute(ElementsCollection elements, String attributeName,
+                                                         String targetValue) {
+        for (SelenideElement element : elements) {
+            if (element.getAttribute(attributeName).equalsIgnoreCase(targetValue)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Searches a first Selenide element, where it's attribute matches to value
+     * Throws an exception, if there is no such element
+     * @param elements - elements collection to search at
+     * @param attributeName - attribute name to check
+     * @param targetValue - target value
+     * @return
+     */
+    @SneakyThrows
+    protected SelenideElement getElementWithAttribute(ElementsCollection elements, String attributeName,
+                                                      String targetValue) {
+        SelenideElement element = searchElementWithAttribute(elements, attributeName, targetValue);
+        if (element == null) {
+            throw new UiEngineExecutionException("Unable to get element with \"" + attributeName + " = " + targetValue + "\"");
+        }
+        return element;
     }
 }

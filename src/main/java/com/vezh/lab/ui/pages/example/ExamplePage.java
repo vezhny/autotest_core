@@ -4,11 +4,9 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.vezh.lab.core.exception.UiEngineExecutionException;
 import com.vezh.lab.ui.form.example.*;
 import com.vezh.lab.ui.pages.PageCore;
 import io.qameta.allure.Step;
-import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
@@ -288,14 +286,9 @@ public class ExamplePage extends PageCore {
      * @param gender - target gender
      * @return - Selenide element <option>
      */
-    @SneakyThrows
     private SelenideElement getGenderOption(Gender gender) {
-        for (SelenideElement option : genderOptions) {
-            if (option.getValue().equals(gender.getValue())) {
-                return option;
-            }
-        }
-        throw new UiEngineExecutionException("Unable to find gender option for \"" + gender + "\"");
+        SelenideElement option = getElementWithAttribute(genderOptions, "value", gender.getValue());
+        return option;
     }
 
     /**
@@ -303,14 +296,9 @@ public class ExamplePage extends PageCore {
      * @param color - target color
      * @return Selenide element <input type=radio>
      */
-    @SneakyThrows
     private SelenideElement getColorElement(Color color) {
-        for (SelenideElement element : colors) {
-            if (element.getAttribute("id").equalsIgnoreCase(color.toString().toLowerCase())) {
-                return element;
-            }
-        }
-        throw new UiEngineExecutionException("Unable to find color radio button for \"" + color + "\"");
+        SelenideElement radioButton = getElementWithAttribute(colors, "id", color.toString());
+        return radioButton;
     }
 
     /**
@@ -318,14 +306,9 @@ public class ExamplePage extends PageCore {
      * @param continent - target continent
      * @return - Selenide element <option>
      */
-    @SneakyThrows
     private SelenideElement getContinentOption(Continent continent) {
-        for (SelenideElement option : continentOptions) {
-            if (continent.toString().equalsIgnoreCase(option.getValue())) {
-                return option;
-            }
-        }
-        throw new UiEngineExecutionException("Unable to find continent option for \"" + continent + "\"");
+        SelenideElement option = getElementWithAttribute(continentOptions, "value", continent.toString());
+        return option;
     }
 
     /**
@@ -333,13 +316,8 @@ public class ExamplePage extends PageCore {
      * @param contact - given contact
      * @return - Selenide element <input type=checkbox>
      */
-    @SneakyThrows
     private SelenideElement getContactCheckbox(Contact contact) {
-        for (SelenideElement checkbox : contacts) {
-            if (checkbox.getAttribute("id").equals(contact.getId())) {
-                return checkbox;
-            }
-        }
-        throw new UiEngineExecutionException("Unable to find contact checkbox for \"" + contact + "\"");
+        SelenideElement checkbox = getElementWithAttribute(contacts, "id", contact.getId());
+        return checkbox;
     }
 }
