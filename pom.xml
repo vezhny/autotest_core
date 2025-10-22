@@ -26,7 +26,7 @@
         <hamcrest.version>3.0</hamcrest.version>
         <allure-maven.version>2.16.1</allure-maven.version>
         <allure.version>2.30.0</allure.version>
-        <allure.report.version>2.14.0</allure.report.version>
+        <allure.report.version>2.30.0</allure.report.version>
         <aspectj.version>1.9.24</aspectj.version>
         <spring.boot.version>3.5.6</spring.boot.version>
         <maven.clean.plugin.version>3.1.0</maven.clean.plugin.version>
