@@ -275,7 +275,7 @@ public class ExamplePage extends PageCore {
      * Returns null, if not selected. Be aware of NPE
      * @return
      */
-    public Continent getSelectedGContinent() {
+    public Continent getSelectedContinent() {
         if (continentSelect.getValue().isEmpty()) {
             return null;
         }
