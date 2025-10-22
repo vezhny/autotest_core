@@ -145,6 +145,7 @@ public class ExamplePage extends PageCore {
         for (Contact contact : contacts) {
             selectContact(contact);
         }
+        return this;
     }
 
     /**
