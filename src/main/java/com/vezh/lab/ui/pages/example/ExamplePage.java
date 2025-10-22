@@ -268,7 +268,7 @@ public class ExamplePage extends PageCore {
      * @return
      */
     public String getMoreInfoText() {
-        return textArea.getText();
+        return textArea.getValue();
     }
 
     /**
