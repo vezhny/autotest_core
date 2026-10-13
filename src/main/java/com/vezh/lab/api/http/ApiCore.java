@@ -2,7 +2,10 @@ package com.vezh.lab.api.http;
 
 import com.vezh.lab.api.json.JsonSerializer;
 import com.vezh.lab.core.config.api.ApiConfig;
+import com.vezh.lab.core.log.LogMasker;
+import com.vezh.lab.core.log.MaskingPrintStream;
 import io.qameta.allure.Allure;
+import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
@@ -23,8 +26,8 @@ public abstract class ApiCore {
     @Autowired
     protected ApiConfig apiConfig;
 
-    @Setter
-    private String token;
+    @Autowired
+    protected TokenStore tokenStore;
 
     @Setter
     private Boolean authenticate = true;
@@ -44,13 +47,17 @@ public abstract class ApiCore {
         if (authenticate) {
             // authentication with Bearer token
             requestSpecification = requestSpecification.header("Authorization",
-                    "Bearer " + getToken());
+                    "Bearer " + tokenStore.getToken(this::authenticate));
         }
+        // passwords are masked in RestAssured logs
+        RestAssuredConfig config = RestAssuredConfig.newConfig()
+                .logConfig(LogConfig.logConfig()
+                        .defaultStream(new MaskingPrintStream(System.out))
+                        .blacklistHeader("Authorization"));
         if (apiConfig.getTrustSsl()) {
-            requestSpecification
-                    .config(RestAssuredConfig.newConfig().sslConfig(new SSLConfig().relaxedHTTPSValidation()));
+            config = config.sslConfig(new SSLConfig().relaxedHTTPSValidation());
         }
-        return requestSpecification;
+        return requestSpecification.config(config);
     }
 
     /**
@@ -129,7 +136,8 @@ public abstract class ApiCore {
         response.then()
                 .log().status()
                 .log().body();
-        Allure.addAttachment("Response body", response.getContentType(), response.asPrettyString());
+        Allure.addAttachment("Response body", response.getContentType(),
+                LogMasker.mask(response.asPrettyString()));
         return response;
     }
 
@@ -145,26 +153,24 @@ public abstract class ApiCore {
         if (body != null) {
             if (rawBody) {
                 requestSpecification.body(body);
-                Allure.addAttachment("Request body", "text/plain", body.toString());
+                Allure.addAttachment("Request body", "text/plain", LogMasker.mask(body.toString()));
             } else {
                 String json = JsonSerializer.getJson(body);
                 requestSpecification.body(json);
                 json = JsonSerializer.formatJson(json);
-                Allure.addAttachment("Request body", "application/json", json);
+                Allure.addAttachment("Request body", "application/json", LogMasker.mask(json));
             }
         }
         return requestSpecification;
     }
 
     /**
-     * Returns authentication token
-     * Gets a new one, if it's absent
-     * @return
+     * Gets a new authentication token
+     * Called by TokenStore, when token is absent or expired
+     * @return - token
      */
-    private String getToken() {
-        if (token == null) {
-            // TODO: getting bearer token here and set it to 'token' variable
-        }
-        return token;
+    protected String authenticate() {
+        // TODO: getting bearer token here
+        return null;
     }
 }
