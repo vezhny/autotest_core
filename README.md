@@ -62,3 +62,12 @@ Passwords are masked with `*****` in logs (both _logback_ and _RestAssured_ requ
 A value is masked, if its key contains _password_, _passwd_ or _pwd_ (case-insensitive), e.g. `"password": "..."`, `newPassword=...`, `<pwd>...</pwd>`.  
 _Authorization_ header is hidden in _RestAssured_ logs as well.  
 If you want to change masking rules, see LogMasker.java
+
+### Authentication token
+Token is kept in _TokenStore_ and shared between all API classes.  
+It's got with `ApiCore.authenticate()` on the first request and refreshed, when `api.tokenTimeout` (e.g. _30m_) is expired.  
+To send requests as another user, use `runAs` — previous token is returned back after the action, even if it fails:
+```java
+tokenStore.runAs(userToken, () -> api.sendExample());
+```
+To drop the token and get a new one on the next request, use `tokenStore.reset()`.

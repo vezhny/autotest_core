@@ -26,8 +26,8 @@ public abstract class ApiCore {
     @Autowired
     protected ApiConfig apiConfig;
 
-    @Setter
-    private String token;
+    @Autowired
+    protected TokenStore tokenStore;
 
     @Setter
     private Boolean authenticate = true;
@@ -47,7 +47,7 @@ public abstract class ApiCore {
         if (authenticate) {
             // authentication with Bearer token
             requestSpecification = requestSpecification.header("Authorization",
-                    "Bearer " + getToken());
+                    "Bearer " + tokenStore.getToken(this::authenticate));
         }
         // passwords are masked in RestAssured logs
         RestAssuredConfig config = RestAssuredConfig.newConfig()
@@ -165,14 +165,12 @@ public abstract class ApiCore {
     }
 
     /**
-     * Returns authentication token
-     * Gets a new one, if it's absent
-     * @return
+     * Gets a new authentication token
+     * Called by TokenStore, when token is absent or expired
+     * @return - token
      */
-    private String getToken() {
-        if (token == null) {
-            // TODO: getting bearer token here and set it to 'token' variable
-        }
-        return token;
+    protected String authenticate() {
+        // TODO: getting bearer token here
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 api:
   url: https://fake-json-api.mock.beeceptor.com
   trustSsl: true
+  tokenTimeout: 30m
 
 selenide:
   url: https://automationintesting.com/selenium/testpage/?
