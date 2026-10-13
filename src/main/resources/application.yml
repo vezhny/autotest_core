@@ -5,3 +5,7 @@ logging:
 spring:
   profiles:
     active: @spring.profiles.active@
+  config:
+    # secrets are not stored in git, see secrets.example.yml in the project root
+    # file path can be changed with SECRETS_FILE environment variable; environment variables override this file
+    import: optional:file:${SECRETS_FILE:${user.home}/.autotest_core/secrets.yml}

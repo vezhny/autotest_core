@@ -2,6 +2,8 @@ api:
   url: https://fake-json-api.mock.beeceptor.com
   trustSsl: true
   tokenTimeout: 30m
+#  login: autotest
+#  password - secret, set in ~/.autotest_core/secrets.yml or env API_PASSWORD
 
 selenide:
   url: https://automationintesting.com/selenium/testpage/?

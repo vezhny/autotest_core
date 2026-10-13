@@ -72,3 +72,8 @@ To send requests as another user, use `runAs` — previous token is returned bac
 tokenStore.runAs(userToken, () -> api.sendExample());
 ```
 To drop the token and get a new one on the next request, use `tokenStore.reset()`.
+
+### Secrets
+Secrets (passwords, api keys) are not stored in git. They come from _~/.autotest_core/secrets.yml_ (path can be changed with `SECRETS_FILE` environment variable) or from environment variables, e.g. `API_PASSWORD` for `api.password`.  
+To start, copy _secrets.example.yml_ from the project root to _~/.autotest_core/secrets.yml_ and fill it in.  
+In code, read a secret with `RequiredSecret.require(apiConfig.getPassword(), "api.password")` — if it's not set, only the test that needs it fails with a hint, where to put it.
