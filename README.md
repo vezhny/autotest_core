@@ -56,3 +56,9 @@ It can be put on a test method or on a test class.
 If UI test fails, there will be taken a **screenshot** and attached into _Allure_ report. 
 They also being saved in _/build/reports/tests/_  
 If you want to configure that, see UiTestListener.java
+
+### Passwords masking
+Passwords are masked with `*****` in logs (both _logback_ and _RestAssured_ request/response logs) and in request/response body attachments in _Allure_ report.  
+A value is masked, if its key contains _password_, _passwd_ or _pwd_ (case-insensitive), e.g. `"password": "..."`, `newPassword=...`, `<pwd>...</pwd>`.  
+_Authorization_ header is hidden in _RestAssured_ logs as well.  
+If you want to change masking rules, see LogMasker.java
