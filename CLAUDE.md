@@ -49,7 +49,8 @@ Example: `ExampleMatcher.assertSuccessResponse` / `assertExampleModels`, used fr
   `@Link(type = "issue", ...)`.
 - A request as another user goes through `tokenStore.runAs(token, () -> ...)`, never by
   replacing the token and restoring it by hand. `tokenStore.reset()` forces a new token.
-- Passwords are masked in logs and Allure attachments by `LogMasker`. When a new kind of
+- Passwords, tokens and api keys are masked in logs, Allure attachments and step parameters
+  by `LogMasker`. When a new kind of
   secret has to be hidden, extend `LogMasker` rather than masking it at the call site.
 
 # Workflow conventions
