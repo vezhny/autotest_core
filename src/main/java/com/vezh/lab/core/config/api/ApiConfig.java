@@ -15,4 +15,7 @@ public class ApiConfig {
     private Boolean trustSsl;
     // token lifetime, e.g. 30m. If absent, token never expires
     private Duration tokenTimeout;
+    // uncomment for authentication; password is a secret, see secrets.example.yml
+//    private String login;
+//    private String password;
 }

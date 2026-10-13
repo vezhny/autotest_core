@@ -57,10 +57,11 @@ If UI test fails, there will be taken a **screenshot** and attached into _Allure
 They also being saved in _/build/reports/tests/_  
 If you want to configure that, see UiTestListener.java
 
-### Passwords masking
-Passwords are masked with `*****` in logs (both _logback_ and _RestAssured_ request/response logs) and in request/response body attachments in _Allure_ report.  
-A value is masked, if its key contains _password_, _passwd_ or _pwd_ (case-insensitive), e.g. `"password": "..."`, `newPassword=...`, `<pwd>...</pwd>`.  
-_Authorization_ header is hidden in _RestAssured_ logs as well.  
+### Sensitive data masking
+Passwords, tokens and api keys are masked with `*****` in logs (both _logback_ and _RestAssured_ request/response logs), in request/response body attachments and in step names and parameters in _Allure_ report.  
+A value is masked, if its key ends with _password_, _passwd_, _pwd_, _token_, _secret_, _api_key_ or _cookie_ (case-insensitive), e.g. `"password": "..."`, `refresh_token=...`, `<clientSecret>...</clientSecret>`, `X-Api-Key: ...`.
+So `tokenTimeout` is not masked. Values _true_, _false_ and _null_ are not masked either.  
+`Bearer ...` and `Basic ...` values are masked anywhere. _Authorization_ header is hidden in _RestAssured_ logs as well.  
 If you want to change masking rules, see LogMasker.java
 
 ### Authentication token
@@ -71,3 +72,8 @@ To send requests as another user, use `runAs` — previous token is returned bac
 tokenStore.runAs(userToken, () -> api.sendExample());
 ```
 To drop the token and get a new one on the next request, use `tokenStore.reset()`.
+
+### Secrets
+Secrets (passwords, api keys) are not stored in git. They come from _~/.autotest_core/secrets.yml_ (path can be changed with `SECRETS_FILE` environment variable) or from environment variables, e.g. `API_PASSWORD` for `api.password`.  
+To start, copy _secrets.example.yml_ from the project root to _~/.autotest_core/secrets.yml_ and fill it in.  
+In code, read a secret with `RequiredSecret.require(apiConfig.getPassword(), "api.password")` — if it's not set, only the test that needs it fails with a hint, where to put it.

@@ -170,7 +170,9 @@ public abstract class ApiCore {
      * @return - token
      */
     protected String authenticate() {
-        // TODO: getting bearer token here
+        // TODO: getting bearer token here, e.g.
+//        String password = RequiredSecret.require(apiConfig.getPassword(), "api.password");
+//        return login(apiConfig.getLogin(), password);
         return null;
     }
 }
