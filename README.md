@@ -46,6 +46,12 @@ If you want to mark some test in _Allure_ report with a link to that bug, you wr
 _Allure_ will fetch all the _URL_ to your _Jira_ from `allure.link.issue.pattern` and append there your bug id. 
 So, you will open this ticker from _Allure_ report right away.
 
+#### Bug annotation
+For bugs there is a shortcut — `@Bug` annotation (_com.vezh.lab.core.annotation.Bug_).  
+` @Bug("JB-512") `  
+It does the same as ` @Link(type = "issue", value = "JB-512") ` and also adds a tag _JB-512_ to the test in _Allure_ report.  
+It can be put on a test method or on a test class.
+
 ### Screenshots
 If UI test fails, there will be taken a **screenshot** and attached into _Allure_ report. 
 They also being saved in _/build/reports/tests/_  
