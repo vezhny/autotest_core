@@ -4,6 +4,9 @@
     <!-- %maskedMsg is %msg with masked passwords -->
     <conversionRule conversionWord="maskedMsg" class="com.vezh.lab.core.log.MaskingMessageConverter"/>
 
+    <!-- drops Allure "Could not update test case" errors -->
+    <turboFilter class="com.vezh.lab.core.log.AllureLifecycleFilter"/>
+
     <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="my-app"/>
     <property name="LOG_PATH" value="${LOG_PATH:-logs}"/>
     <property name="ROOT_LOG_LEVEL" value="${ROOT_LOG_LEVEL:-DEBUG}"/>
